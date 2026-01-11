@@ -6,22 +6,16 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root', // ✅ this is key
 })
 export class CvAnalyzerService {
-  private API = 'https://seecvs-be.onrender.com/analyze-cvs';
+  private apiUrl = 'https://seecvs-be.onrender.com/analyze-cvs';
 
   constructor(private http: HttpClient) {}
 
-  analyzeSingleCv(
-    file: File,
-    jobDescription: string,
-    notes: string
-  ): Observable<{ score: number; comment: string }> {
+  analyzeSingleCv(file: File, jobDesc: string, notes: string): Observable<any> {
     const formData = new FormData();
-    formData.append('files', file);
-    formData.append('job_description', jobDescription);
+    formData.append('files', file); // Note: Backend expects 'files' as a list
+    formData.append('job_description', jobDesc);
     formData.append('notes', notes);
 
-    return this.http
-      .post<any>(this.API, formData)
-      .pipe(map((res) => res.ranked_cvs[0]));
+    return this.http.post(this.apiUrl, formData);
   }
 }
