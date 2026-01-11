@@ -1,0 +1,255 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: #108a8a;
+  --primary-light: #e6f4f4;
+  --text-main: #2d3748;
+  --bg-gradient: linear-gradient(135deg, #f0f7f7 0%, #ffffff 100%);
+}
+
+body {
+  background: var(--bg-gradient);
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Navbar & Hero */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-content {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #1e293b;
+}
+
+.logo-icon {
+  background: #108a8a;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+
+.pro-badge {
+  font-size: 0.6rem;
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+/* Hero Icon Animation */
+.hero-icon-container {
+  margin-top: 20px;
+}
+
+.floating-svg {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Sorting Button */
+.sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #64748b;
+  transition: all 0.2s;
+}
+
+.sort-btn:hover {
+  border-color: #108a8a;
+  color: #108a8a;
+  background: #f0fdfa;
+}
+
+/* Ensure body doesn't hide behind fixed header */
+.app-container {
+  padding-top: 10px;
+}
+.logo { font-weight: 800; font-size: 1.4rem; color: var(--text-main); }
+.logo span { color: var(--primary); }
+.nav-btn { background: var(--primary); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; }
+
+.hero-section { text-align: center; padding: 2rem 10% 1rem; }
+.hero-section h1 { font-size: 3rem; margin-bottom: 1rem; color: var(--text-main); }
+.gradient-text { background: linear-gradient(90deg, var(--primary), #38b2ac); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* The Tool Card */
+.glass-card {
+  background: white;
+  max-width: 1100px;
+  margin: 0 auto 50px;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+  padding: 2rem;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+/* Inputs & Dropzone */
+.input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #4a5568; }
+textarea {
+  width: 100%; border: 1.5px solid #e2e8f0; border-radius: 12px;
+  padding: 1rem; transition: border 0.3s; resize: vertical; min-height: 100px;
+}
+textarea:focus { outline: none; border-color: var(--primary); }
+
+.dropzone {
+  border: 2px dashed #cbd5e0; border-radius: 16px; padding: 3rem 1rem;
+  text-align: center; cursor: pointer; transition: 0.3s; background: #fafcfe;
+}
+.dropzone:hover { background: var(--primary-light); border-color: var(--primary); }
+.browse-link { color: var(--primary); font-weight: 700; text-decoration: underline; }
+
+/* Analysis Button */
+.analyze-btn {
+  width: 100%; margin-top: 1.5rem; padding: 1rem; background: var(--primary);
+  color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem;
+  cursor: pointer; transition: transform 0.2s;
+}
+.analyze-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(16,138,138,0.3); }
+
+/* CV Result Cards */
+.cv-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem; margin-top: 1.5rem;
+}
+.cv-card {
+  background: #fff; border: 1px solid #edf2f7; border-radius: 16px; padding: 1.2rem;
+  transition: all 0.3s ease; animation: fadeInUp 0.5s ease;
+}
+.cv-card.is-done { border-left: 5px solid var(--primary); }
+
+.score-circle {
+  display: inline-block; padding: 4px 12px; background: var(--primary-light);
+  color: var(--primary); border-radius: 20px; font-weight: 800; font-size: 0.9rem;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Progress Bar Animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.cv-list-full {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cv-row-item {
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.cv-row-item:hover {
+  transform: translateX(5px);
+  border-color: #108a8a;
+  box-shadow: 0 4px 12px rgba(16,138,138,0.1);
+}
+
+.cv-main-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.file-info { display: flex; align-items: center; gap: 1rem; }
+
+.file-type-icon {
+  background: #f1f5f9;
+  color: #64748b;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.name-container { display: flex; flex-direction: column; }
+.file-name { font-weight: 600; color: #1e293b; }
+.status-text { font-size: 0.8rem; color: #94a3b8; }
+.status-text[data-status="uploading"] { color: #108a8a; font-weight: 600; }
+
+/* Progress Bar Styles */
+.progress-section { margin-bottom: 0.5rem; }
+.progress-meta { font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 4px; text-align: right; }
+
+.progress-track {
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #108a8a, #38b2ac, #108a8a);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
+  transition: width 0.4s ease;
+}
+
+/* Score Pill */
+.score-pill {
+  background: #e6f4f4;
+  color: #108a8a;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: 1px solid rgba(16,138,138,0.2);
+}
+
+/* Comment Box */
+.cv-comment-box {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #e2e8f0;
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.5;
+}
