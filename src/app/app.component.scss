@@ -1,0 +1,59 @@
+.app-footer {
+  margin-top: 50px;
+  padding: 30px 0;
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
+
+  .footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #64748b;
+    font-size: 0.9rem;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+  }
+
+  .platx-link {
+    text-decoration: none;
+    color: #1e293b;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.5px;
+    transition: transform 0.2s ease;
+    display: inline-block;
+
+    span {
+      color: #108a8a; /* Your primary teal */
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+/* Ensure the page content stretches so footer stays at bottom */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1 0 auto;
+}
