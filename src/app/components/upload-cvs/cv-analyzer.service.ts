@@ -6,7 +6,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root', // ✅ this is key
 })
 export class CvAnalyzerService {
-  private API = 'http://localhost:8000/analyze-cvs';
+  private API = 'https://seecvs-be.onrender.com/analyze-cvs';
 
   constructor(private http: HttpClient) {}
 

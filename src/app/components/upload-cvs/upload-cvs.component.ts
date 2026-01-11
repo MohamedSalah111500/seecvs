@@ -1,142 +1,106 @@
 import { Component } from '@angular/core';
-import { UploadedCv } from './types';
-import { CvAnalyzerService } from './cv-analyzer.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  animate,
-  query,
-  stagger,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import { CvAnalyzerService } from './cv-analyzer.service';
+
+export interface UploadedCv {
+  file: File;
+  progress: number;
+  status: 'pending' | 'uploading' | 'done' | 'error';
+  score?: number;
+  comment?: string;
+}
 
 @Component({
   selector: 'app-upload-cvs',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './upload-cvs.component.html',
   styleUrls: ['./upload-cvs.component.scss'],
-  standalone: true,
-  providers: [CvAnalyzerService],
-  imports: [CommonModule, FormsModule],
   animations: [
     trigger('listAnimation', [
       transition('* <=> *', [
-        // Handles items entering the list
-        query(
-          ':enter',
-          [
-            style({ opacity: 0, transform: 'translateY(20px)' }),
-            stagger(
-              '80ms',
-              animate(
-                '300ms ease-out',
-                style({ opacity: 1, transform: 'translateY(0)' })
-              )
-            ),
-          ],
-          { optional: true }
-        ),
-
-        // FIX: Instead of :move, we use animateChild or
-        // let Angular handle the position change via the 'trackBy' logic
-        query(
-          ':leave',
-          [
-            animate(
-              '200ms ease-in',
-              style({ opacity: 0, transform: 'scale(0.9)' })
-            ),
-          ],
-          { optional: true }
-        ),
-      ]),
-    ]),
-  ],
+        query(':enter', [
+          style({ opacity: 0, transform: 'translateY(15px)' }),
+          stagger('100ms', animate('400ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })))
+        ], { optional: true })
+      ])
+    ])
+  ]
 })
 export class UploadCvsComponent {
   cvs: UploadedCv[] = [];
   jobDescription: string = '';
-  notes: string = '';
   isUploading = false;
+  currentLang: 'en' | 'ar' = 'en';
+  activeTab: 'rank' | 'ats' = 'rank';
+
+  atsFile: File | null = null;
+  atsResult: any = null;
 
   constructor(private analyzerService: CvAnalyzerService) {}
 
-  trackByFn(index: number, item: UploadedCv) {
-    // Unique ID based on name and size to ensure Angular tracks the row correctly
-    return item.file ? `${item.file.name}-${item.file.size}` : index;
+  toggleLang() {
+    this.currentLang = this.currentLang === 'en' ? 'ar' : 'en';
+    document.documentElement.dir = this.currentLang === 'ar' ? 'rtl' : 'ltr';
   }
-
- sortByScore() {
-  // 1. Sort the existing array
-  this.cvs.sort((a, b) => (b.score || 0) - (a.score || 0));
-
-  // 2. IMPORTANT: Create a new array reference so Angular detects the change
-  // This triggers the listAnimation and refreshes the view
-  this.cvs = [...this.cvs];
-}
 
   onFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
-
-    const newFiles = Array.from(input.files);
-
-    // Map files to our structure and APPEND them to the existing list
-    const mappedCvs: UploadedCv[] = newFiles.map((file) => ({
-      file,
-      progress: 0,
-      status: 'pending',
-      score: 0,
-      comment: ''
+    const mapped: UploadedCv[] = Array.from(input.files).map(file => ({
+      file, progress: 0, status: 'pending' as const, score: 0, comment: ''
     }));
-
-    this.cvs = [...this.cvs, ...mappedCvs];
-    input.value = ''; // Reset input so same file can be picked again if removed
+    this.cvs = [...this.cvs, ...mapped];
+    input.value = '';
   }
 
   uploadAll() {
-    // VALIDATION: Not submitting without Job Description
-    if (!this.jobDescription.trim()) {
-      alert("Please enter a Job Description first.");
-      return;
-    }
 
-    if (!this.cvs.length) return;
-
+    if (!this.jobDescription.trim()) return;
     this.isUploading = true;
-
-    this.cvs.forEach((cv) => {
-      if (cv.status === 'done') return; // Skip already processed
-
+    this.cvs.forEach(cv => {
+      if (cv.status === 'done') return;
       cv.status = 'uploading';
-      cv.progress = 30; // Start progress bar visually
-
-      this.analyzerService
-        .analyzeSingleCv(cv.file, this.jobDescription, this.notes)
-        .subscribe({
-          next: (res) => {
-            cv.progress = 100;
-            cv.status = 'done';
-            cv.score = res.score;
-            cv.comment = res.comment;
-
-            // Auto-sort once everything is finished
-            if (this.cvs.every(item => item.status === 'done' || item.status === 'error')) {
-              this.isUploading = false;
-              this.sortByScore();
-            }
-          },
-          error: () => {
-            cv.status = 'error';
-            cv.progress = 0;
-            this.isUploading = false;
-          },
-        });
+      this.analyzerService.analyzeSingleCv(cv.file, this.jobDescription, '').subscribe({
+        next: (res) => {
+          cv.status = 'done';
+          cv.score = res.score || 0;
+          cv.comment = res.comment;
+          this.checkFinished();
+        },
+        error: () => { cv.status = 'error'; this.checkFinished(); }
+      });
     });
   }
 
-  removeCv(index: number) {
-    this.cvs.splice(index, 1);
+  checkFinished() {
+    if (this.cvs.every(c => c.status !== 'uploading')) {
+      this.isUploading = false;
+      this.cvs = [...this.cvs].sort((a, b) => (b.score || 0) - (a.score || 0));
+    }
   }
+
+  onAtsFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) this.atsFile = input.files[0];
+  }
+checkAts() {
+  if (!this.atsFile) return;
+  this.isUploading = true;
+
+  // We send "ATS Scan" as the job description
+  // AND "ats-mode" as the notes so the Python logic can switch prompts
+  this.analyzerService.analyzeSingleCv(this.atsFile, "ATS Optimization", "ats-mode").subscribe({
+    next: (res) => {
+      // res will now contain the advice in the 'comment' field
+      this.atsResult = res;
+      this.isUploading = false;
+    },
+    error: () => this.isUploading = false
+  });
+}
+
+  trackByFn(index: number, item: UploadedCv) { return item.file.name; }
 }

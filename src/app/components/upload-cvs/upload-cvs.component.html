@@ -1,135 +1,106 @@
-<div class="analysis-container">
-  <header class="hero-section">
-    <div class="hero-content">
-      <span class="badge">AI Recruitment Tool</span>
-      <h1>AI-Powered <span class="highlight">CV Selection</span></h1>
-      <p>
-        Identify the best talent instantly. Just paste your requirements and
-        upload candidates.
-      </p>
+
+
+<div class="page-wrapper" [class.rtl-mode]="currentLang === 'ar'">
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="logo">
+        <div class="logo-icon">SC</div>
+        See<span>CVs</span>.com <small class="pro-badge">PRO</small>
+      </div>
+      <button class="lang-btn" (click)="toggleLang()">
+        {{ currentLang === 'en' ? 'العربية' : 'English' }}
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero-header">
+    <h1>{{ currentLang === 'en' ? 'Find the Perfect' : 'اعثر على المرشح' }} <span class="gradient-text">{{ currentLang === 'en' ? 'Candidate' : 'المثالي' }}</span></h1>
+
+      <section class="hero-section">
+
+    <div class="hero-icon-container">
+      <svg width="120" height="80" viewBox="0 0 24 24" fill="none" class="floating-svg">
+        <circle cx="12" cy="12" r="10" stroke="#108a8a" stroke-width="0.5" fill="#e6f4f4" />
+        <path d="M15 15l3 3m-5-2a4 4 0 110-8 4 4 0 010 8z" stroke="#108a8a" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="3" fill="#108a8a" opacity="0.2" />
+      </svg>
+    </div>
+  </section>
+
+    <div class="tab-switcher">
+      <button [class.active]="activeTab === 'rank'" (click)="activeTab = 'rank'">Ranking Engine</button>
+      <button [class.active]="activeTab === 'ats'" (click)="activeTab = 'ats'">ATS Checker</button>
     </div>
   </header>
 
-  <main class="main-card">
-    <div class="config-grid">
+  <main class="main-card fade-in">
+    <div class="dashboard-grid" *ngIf="activeTab === 'rank'">
       <div class="input-pane">
-        <div class="group-title">1. Define Needs</div>
-        <div class="field">
-          <label for="jobDesc">Job Description (Required)</label>
-          <textarea
-            id="jobDesc"
-            [(ngModel)]="jobDescription"
-            placeholder="Paste your job requirements here..."
-            [class.error-border]="!jobDescription && isUploading"
-          >
-          </textarea>
+        <div class="field-group">
+          <label>{{ currentLang === 'en' ? 'Job Requirements' : 'متطلبات الوظيفة' }}</label>
+          <textarea [(ngModel)]="jobDescription" placeholder="Paste here..."></textarea>
         </div>
-        <div class="field">
-          <label for="notes">Internal Notes</label>
-          <textarea
-            id="notes"
-            [(ngModel)]="notes"
-            placeholder="e.g. Prioritize Python experience..."
-          ></textarea>
+
+        <div class="dropzone" (click)="fRef.click()">
+          <div class="dz-icon">📁</div>
+          <p>{{ currentLang === 'en' ? 'Drop CVs or' : 'اسحب الملفات أو' }} <span class="browse">Browse</span></p>
+          <input #fRef type="file" multiple (change)="onFilesSelected($event)" hidden>
         </div>
+
+        <button class="primary-btn" [disabled]="!jobDescription || !cvs.length || isUploading" (click)="uploadAll()">
+          {{ isUploading ? 'Processing...' : (currentLang === 'en' ? 'Analyze Now' : 'حلل الآن') }}
+        </button>
       </div>
 
-      <div class="upload-pane">
-        <div class="group-title">2. Select CVs</div>
-        <div class="dropzone" (click)="fileInput.click()">
-          <div class="icon">📁</div>
-          <p>Drag files here or <span>browse</span></p>
-          <input
-            #fileInput
-            type="file"
-            multiple
-            (change)="onFilesSelected($event)"
-            accept=".pdf,.doc,.docx"
-            hidden
-          />
+      <div class="results-pane">
+        <h3 class="pane-title">Analysis Queue</h3>
+        <div class="cv-stack" [@listAnimation]="cvs.length">
+          <div class="cv-card" *ngFor="let cv of cvs; let i = index; trackBy: trackByFn"
+               [class.is-winner]="i === 0 && (cv.score || 0) > 0">
+            <div class="cv-info">
+              <div>
+                <div class="filename">{{ cv.file.name }}</div>
+                <div class="status-tag" [attr.data-status]="cv.status">{{ cv.status }}</div>
+              </div>
+              <div class="score-pill" *ngIf="(cv.score || 0) > 0">{{ cv.score }}%</div>
+            </div>
+
+            <div class="progress-bar" *ngIf="cv.status === 'uploading'">
+              <div class="fill" [style.width.%]="cv.progress"></div>
+            </div>
+
+            <div class="ai-comment" *ngIf="cv.comment">
+              <strong>SeeCVs AI:</strong> {{ cv.comment }}
+            </div>
+          </div>
         </div>
-
-        <button
-          class="primary-btn"
-          [disabled]="
-            isUploading || !jobDescription?.trim() || cvs.length === 0
-          "
-          (click)="uploadAll()"
-        >
-          <span *ngIf="!isUploading">🚀 Start Ranking Process</span>
-          <span *ngIf="isUploading">
-            <span class="spinner"></span> Analyzing Candidates...
-          </span>
-        </button>
-
-        <p
-          class="validation-hint"
-          *ngIf="!jobDescription?.trim() && cvs.length > 0"
-        >
-          ⚠️ Please enter a Job Description to enable analysis.
-        </p>
       </div>
     </div>
 
-    <div class="analysis-queue" *ngIf="cvs.length">
-      <div class="queue-header">
-        <h3>Analysis Queue ({{ cvs.length }})</h3>
-        <button
-          class="btn btn-outline"
-          (click)="sortByScore()"
-          *ngIf="!isUploading"
-        >
-          Sort by Match Score
-        </button>
-      </div>
+    <div class="ats-view" *ngIf="activeTab === 'ats'">
+      <div class="ats-center">
+        <h2>ATS Resume Optimization</h2>
+        <div class="dropzone" (click)="atsRef.click()">
+          <p>{{ atsFile ? atsFile.name : 'Select your CV' }}</p>
+          <input #atsRef type="file" (change)="onAtsFileSelected($event)" hidden>
+        </div>
+        <button class="primary-btn" (click)="checkAts()" [disabled]="!atsFile || isUploading">Check ATS Score</button>
 
-      <div class="cv-list" [@listAnimation]="cvs.length">
-        <div
-          class="cv-row"
-          *ngFor="let cv of cvs; let i = index; trackBy: trackByFn"
-          [class.best-match]="i === 0 && cv.status === 'done'"
-        >
-          <div class="cv-main">
-            <div class="file-info">
-              <span class="doc-icon">PDF</span>
-              <div>
-                <div class="file-name">{{ cv.file.name }}</div>
-                <div class="file-status" [attr.data-status]="cv.status">
-                  {{
-                    cv.status === "done"
-                      ? "Analysis Complete"
-                      : cv.status === "uploading"
-                      ? "AI Scanning..."
-                      : "Pending"
-                  }}
-                </div>
-              </div>
-            </div>
-            <div class="d-flex">
-              <div class="score-box" *ngIf="cv.status === 'done'">
-                <span class="score-label">Match Score</span>
-                <span class="score-value">{{ cv.score }}%</span>
-              </div>
-
-              <button
-                class="remove-btn btn"
-                (click)="removeCv(i)"
-                *ngIf="!isUploading"
-              >
-                ×
-              </button>
-            </div>
-          </div>
-
-          <div class="progress-container" *ngIf="cv.status === 'uploading'">
-            <div class="progress-bar" [style.width.%]="cv.progress"></div>
-          </div>
-
-          <div class="ai-comment" *ngIf="cv.comment">
-            <strong>AI Insight:</strong> {{ cv.comment }}
-          </div>
+        <div class="ats-result" *ngIf="atsResult">
+          <div class="big-score">{{ atsResult.score }}%</div>
+          <p class="ai-comment">{{ atsResult.comment }}</p>
         </div>
       </div>
     </div>
   </main>
+</div>
+
+
+
+
+<div class="global-overlay" *ngIf="isUploading && activeTab === 'rank'">
+   <div class="spinner-box">
+      <div class="spinner"></div>
+      <p>AI is ranking your candidates...</p>
+   </div>
 </div>
