@@ -1,37 +1,47 @@
-/* Color Theme */
-$primary: #108a8a;
-$text: #1e293b;
-$border: #e2e8f0;
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
 
-.page-wrapper {
-  padding-top: 100px;
-  padding-bottom: 60px;
-  min-height: 100vh;
-  &.rtl-mode {
-    direction: rtl;
-    .cv-card {
-      border-left: none;
-      border-right: 5px solid $border;
-      &.is-winner {
-        border-right-color: $primary;
-      }
-    }
+$primary: #587b69;
+$primary-light: #eef2f0;
+$text-dark: #1e293b;
+$text-light: #64748b;
+$border-color: #e2e8f0;
+$bg-color: #f8fafc;
+
+:root {
+  --app-font: "Cairo", sans-serif;
+}
+
+::ng-deep body {
+  margin: 0;
+  font-family: var(--app-font);
+  background-color: $bg-color;
+  &.lock-scroll {
+    overflow: hidden;
   }
 }
 
-/* Navbar */
+.page-wrapper {
+  padding-top: 100px;
+  padding-bottom: 40px;
+  min-height: 100vh;
+  &.rtl-mode {
+    direction: rtl;
+  }
+}
+
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 70px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid $border-color;
   z-index: 1000;
   display: flex;
   align-items: center;
+
   .nav-content {
     width: 90%;
     max-width: 1200px;
@@ -40,43 +50,35 @@ $border: #e2e8f0;
     justify-content: space-between;
     align-items: center;
   }
+
   .logo {
     font-weight: 800;
     font-size: 1.4rem;
     display: flex;
-    gap: 8px;
-    span {
-      color: $primary;
-    }
+    align-items: center;
+    gap: 10px;
+    color: $text-dark;
   }
+
   .logo-icon {
     background: $primary;
     color: white;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-  }
-  .lang-btn {
-    background: white;
-    border: 1px solid $border;
-    padding: 6px 14px;
+    padding: 4px 10px;
     border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
+    font-size: 0.9rem;
   }
 }
 
-/* Hero */
 .hero-header {
   text-align: center;
   margin-bottom: 40px;
   h1 {
     font-size: 2.8rem;
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
   .gradient-text {
-    background: linear-gradient(90deg, $primary, #38b2ac);
+    background: linear-gradient(90deg, $primary, #88b09b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -84,69 +86,71 @@ $border: #e2e8f0;
 
 .tab-switcher {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
   button {
     background: white;
-    border: 1px solid $border;
-    padding: 10px 20px;
-    border-radius: 10px;
+    border: 1px solid $border-color;
+    padding: 12px 24px;
+    border-radius: 14px;
     cursor: pointer;
     font-weight: 700;
-    color: #64748b;
+    color: $text-light;
+    transition: 0.3s;
     &.active {
       background: $primary;
       color: white;
       border-color: $primary;
-      box-shadow: 0 10px 15px rgba(16, 138, 138, 0.2);
+      box-shadow: 0 8px 15px rgba(88, 123, 105, 0.25);
     }
   }
 }
 
-/* Dashboard Card */
 .main-card {
   background: white;
-  max-width: 1150px;
+  max-width: 1196px;
   margin: 0 auto;
   border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 50px;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 40px;
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
 }
 
-/* Inputs */
 .field-group {
   margin-bottom: 20px;
   label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: 700;
     color: #475569;
   }
   textarea {
     width: 100%;
     min-height: 150px;
-    border-radius: 12px;
-    border: 1.5px solid $border;
-    padding: 15px;
-    background: #f8fafc;
-    resize: vertical;
+    border-radius: 16px;
+    border: 1.5px solid $border-color;
+    padding: 18px;
+    background: #fcfdfe;
+    font-family: inherit;
+    &:focus {
+      outline: none;
+      border-color: $primary;
+    }
   }
 }
 
 .dropzone {
-  border: 2px dashed #cbd5e0;
-  border-radius: 16px;
-  padding: 40px;
+  border: 2px dashed $border-color;
+  border-radius: 18px;
+  padding: 40px 20px;
   text-align: center;
   cursor: pointer;
   background: #fafcfe;
@@ -155,49 +159,47 @@ $border: #e2e8f0;
     border-color: $primary;
   }
   .dz-icon {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 2.2rem;
+    margin-bottom: 12px;
   }
   .browse {
     color: $primary;
-    font-weight: 700;
+    font-weight: 800;
     text-decoration: underline;
   }
 }
 
 .primary-btn {
   width: 100%;
-  margin-top: 20px;
-  padding: 16px;
+  margin-top: 25px;
+  padding: 18px;
   background: $primary;
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   font-weight: 800;
   cursor: pointer;
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(16, 138, 138, 0.3);
-  }
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
 }
 
-/* Results */
 .cv-card {
-  background: white;
-  border: 1px solid #dee5ec;
-  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #edf2f7;
+  border-radius: 18px;
   padding: 20px;
-  margin-bottom: 15px;
-  border-left: 2px solid #e2e8f0;
+  margin-bottom: 16px;
+  border-left: 5px solid #e2e8f0;
   &.is-winner {
     border-left-color: $primary;
-    background: #f0fdfa;
-    box-shadow: 0 4px 12px rgba(16, 138, 138, 0.1);
+    background: #f9fbf9;
   }
+  &.is-error {
+    border-left-color: #ef4444;
+  }
+
   .cv-info {
     display: flex;
     justify-content: space-between;
@@ -205,124 +207,166 @@ $border: #e2e8f0;
   }
   .filename {
     font-weight: 700;
-    color: $text;
+    color: $text-dark;
   }
   .score-pill {
     background: $primary;
     color: white;
     padding: 6px 14px;
     border-radius: 20px;
-    font-weight: 800;
+    font-weight: 700;
+    font-size: larger;
   }
+
   .ai-comment {
     margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px dashed #cbd5e0;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #587b69;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .comment-text {
+      white-space: pre-line;
+      color: #334155;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      display: block;
+      word-break: break-word;
+    }
+
+    .comment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px; // Gap between the 3 points
+    }
+
+    .comment-item {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #334155;
+      position: relative;
+      padding-left: 5px;
+
+      // Optional: If you want to force a specific style on the bullet
+      &::first-letter {
+        font-weight: bold;
+        color: $primary;
+      }
+    }
   }
 }
 
-.progress-bar {
-  height: 6px;
-  background: #f1f5f9;
-  border-radius: 10px;
-  margin-top: 10px;
-  overflow: hidden;
-  .fill {
-    height: 100%;
-    background: $primary;
-    transition: width 0.4s ease;
+// RTL Fixes for AI Comment
+.rtl-mode {
+  .cv-card {
+    border-left: 1px solid #edf2f7;
+    border-right: 5px solid #e2e8f0;
+    &.is-winner {
+      border-right-color: $primary;
+    }
+  }
+  .ai-comment {
+    text-align: right;
+    .comment-text {
+      padding-right: 5px;
+      padding-left: 0;
+    }
   }
 }
 
-/* ATS Result */
-.ats-center {
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-  .big-score {
-    font-size: 3rem;
-    font-weight: 900;
-    color: $primary;
-    margin: 20px 0;
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.5s ease forwards;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Spinner Animation */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.spinner-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.spinner {
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 0.8s linear infinite;
-}
-
-/* For the global overlay */
 .global-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(4px);
-  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 24px;
 
   .spinner-box {
     text-align: center;
     .spinner {
-      width: 40px;
-      height: 40px;
-      border-color: rgba(16, 138, 138, 0.2);
-      border-top-color: #108a8a; /* Your primary teal */
-      margin: 0 auto 15px;
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f1f5f9;
+      border-top-color: $primary;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
     }
     p {
       font-weight: 700;
-      color: #108a8a;
+      color: $primary;
+      font-size: 1.1rem;
     }
   }
 }
 
-/* Adjust primary-btn to accommodate spinner */
-.primary-btn {
-  position: relative;
-  overflow: hidden;
-  min-height: 56px; /* Prevents button height jumping */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app-footer {
+  margin-top: 60px;
+  padding: 40px 0;
+  border-top: 1px solid $border-color;
+  .footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    color: $text-light;
+  }
+  .platx-link {
+    text-decoration: none;
+    color: $text-dark;
+    font-weight: 800;
+    span {
+      color: $primary;
+    }
+  }
+}
+
+
+.see-more-btn {
+  background: none;
+  border: none;
+  margin-top: 6px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #587b69;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.comment-item {
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+.rtl-mode .see-more-btn {
+  text-align: right;
 }

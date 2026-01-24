@@ -10,12 +10,17 @@ export class CvAnalyzerService {
 
   constructor(private http: HttpClient) {}
 
-  analyzeSingleCv(file: File, jobDesc: string, notes: string): Observable<any> {
+  analyzeSingleCv(
+    file: File,
+    jobDesc: string,
+    notes: string,
+    lang: string,
+  ): Observable<any> {
     const formData = new FormData();
     formData.append('files', file); // Note: Backend expects 'files' as a list
     formData.append('job_description', jobDesc);
     formData.append('notes', notes);
-
+    formData.append('lang', lang);
     return this.http.post(this.apiUrl, formData);
   }
 }
