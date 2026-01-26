@@ -1,28 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
 
 $primary: #587b69;
-$primary-light: #eef2f0;
-$text-dark: #1e293b;
-$text-light: #64748b;
-$border-color: #e2e8f0;
-$bg-color: #f8fafc;
-
-:root {
-  --app-font: "Cairo", sans-serif;
-}
+$success: #10b981;
+$warning: #f59e0b;
+$danger: #ef4444;
+$bg: #587b691f;
+$dark: #1e293b;
+$border: #e2e8f0;
 
 ::ng-deep body {
   margin: 0;
-  font-family: var(--app-font);
-  background-color: $bg-color;
-  &.lock-scroll {
-    overflow: hidden;
-  }
+  font-family: "Cairo", sans-serif;
+  background: $bg;
 }
 
 .page-wrapper {
-  padding-top: 100px;
-  padding-bottom: 40px;
+  padding-top: 80px;
   min-height: 100vh;
   &.rtl-mode {
     direction: rtl;
@@ -32,257 +25,267 @@ $bg-color: #f8fafc;
 .navbar {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
   height: 70px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid $border-color;
   z-index: 1000;
-  display: flex;
-  align-items: center;
-
+  border-bottom: 1px solid $border;
   .nav-content {
-    width: 90%;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-
-  .logo {
-    font-weight: 800;
-    font-size: 1.4rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: $text-dark;
-  }
-
-  .logo-icon {
-    background: $primary;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    height: 100%;
+    padding: 0 20px;
   }
 }
 
 .hero-header {
   text-align: center;
-  margin-bottom: 40px;
+  padding: 60px 20px;
   h1 {
-    font-size: 2.8rem;
-    font-weight: 800;
-    margin-bottom: 25px;
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 10px;
   }
   .gradient-text {
-    background: linear-gradient(90deg, $primary, #88b09b);
+    background:#587b69;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+  .subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+  }
 }
 
-.tab-switcher {
+// Task Selection Cards
+.task-selector {
   display: flex;
-  gap: 12px;
+  gap: 20px;
   justify-content: center;
-  button {
+  max-width: 800px;
+  margin: 0 auto 20px;
+  .task-card {
     background: white;
-    border: 1px solid $border-color;
-    padding: 12px 24px;
-    border-radius: 14px;
+    padding: 20px 30px;
+    border-radius: 20px;
+    width: 280px;
     cursor: pointer;
-    font-weight: 700;
-    color: $text-light;
+    border: 2px solid transparent;
     transition: 0.3s;
-    &.active {
-      background: $primary;
-      color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 15px; // Made it more horizontal for better spacing
+
+    &:hover {
+      transform: translateY(-3px);
       border-color: $primary;
-      box-shadow: 0 8px 15px rgba(88, 123, 105, 0.25);
+    }
+    &.active {
+      border-color: $primary;
+      background: #f0fdf4;
+    }
+
+    .icon {
+    }
+    h3 {
+      margin: 0;
+      font-weight: 800;
+      font-size: 1.1rem;
+      line-height: 26px;
     }
   }
 }
 
-.main-card {
-  background: white;
-  max-width: 1196px;
+.ats-container {
+  max-width: 700px;
   margin: 0 auto;
-  border-radius: 24px;
+}
+
+// Ensure the Browse span looks like a link
+.browse {
+  color: $primary;
+  font-weight: 800;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+
+// Fix for verdict box alignment
+.verdict-box {
+  text-align: left;
+  .badge {
+    color: white;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  h3 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+}
+
+.rtl-mode .verdict-box {
+  text-align: right;
+}
+
+.main-card {
+  max-width: 1100px;
+  margin: 0 auto 50px;
+  background: white;
+  border-radius: 30px;
   padding: 40px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.03);
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 1fr 1.5fr;
   gap: 40px;
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
 }
 
-.field-group {
+.step-label {
+  font-weight: 800;
+  color: $primary;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+textarea {
+  width: 100%;
+  height: 180px;
+  border-radius: 15px;
+  border: 1.5px solid $border;
+  padding: 15px;
+  resize: none;
   margin-bottom: 20px;
-  label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 700;
-    color: #475569;
-  }
-  textarea {
-    width: 100%;
-    min-height: 150px;
-    border-radius: 16px;
-    border: 1.5px solid $border-color;
-    padding: 18px;
-    background: #fcfdfe;
-    font-family: inherit;
-    &:focus {
-      outline: none;
-      border-color: $primary;
-    }
-  }
+  font-family: inherit;
 }
 
 .dropzone {
-  border: 2px dashed $border-color;
-  border-radius: 18px;
-  padding: 40px 20px;
+  border: 2px dashed $border;
+  border-radius: 20px;
+  padding: 40px;
   text-align: center;
   cursor: pointer;
   background: #fafcfe;
+  margin-bottom: 10px;
   &:hover {
-    background: #f0fdfa;
     border-color: $primary;
-  }
-  .dz-icon {
-    font-size: 2.2rem;
-    margin-bottom: 12px;
-  }
-  .browse {
-    color: $primary;
-    font-weight: 800;
-    text-decoration: underline;
+    background: #f0fdf4;
   }
 }
 
 .primary-btn {
   width: 100%;
-  margin-top: 25px;
   padding: 18px;
   background: $primary;
   color: white;
   border: none;
-  border-radius: 16px;
+  border-radius: 15px;
   font-weight: 800;
   cursor: pointer;
+  transition: 0.3s;
+  &.glow:hover {
+    box-shadow: 0 0 20px rgba($primary, 0.4);
+  }
   &:disabled {
     opacity: 0.5;
-    cursor: not-allowed;
   }
 }
 
+// Leaderboard
 .cv-card {
-  background: #fff;
-  border: 1px solid #edf2f7;
+  background: white;
+  border: 1px solid $border;
   border-radius: 18px;
   padding: 20px;
-  margin-bottom: 16px;
-  border-left: 5px solid #e2e8f0;
+  margin-bottom: 15px;
+  position: relative;
+  border-left: 5px solid #cbd5e1;
+  transition: 0.3s;
   &.is-winner {
-    border-left-color: $primary;
-    background: #f9fbf9;
+    border-left-color: $success;
+    background: #f0fdf4;
   }
-  &.is-error {
-    border-left-color: #ef4444;
+  .rank-tag {
+    position: absolute;
+    left: -10px;
+    top: -10px;
+    background: $dark;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: 800;
+    font-size: 0.7rem;
   }
-
   .cv-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .filename {
-    font-weight: 700;
-    color: $text-dark;
-  }
   .score-pill {
-    background: $primary;
     color: white;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: larger;
-  }
-
-  .ai-comment {
-    margin-top: 15px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 16px;
-
-    .ai-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #587b69;
-      color: white;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.7rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-
-    .comment-text {
-      white-space: pre-line;
-      color: #334155;
-      font-size: 0.9rem;
-      line-height: 1.8;
-      display: block;
-      word-break: break-word;
-    }
-
-    .comment-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px; // Gap between the 3 points
-    }
-
-    .comment-item {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #334155;
-      position: relative;
-      padding-left: 5px;
-
-      // Optional: If you want to force a specific style on the bullet
-      &::first-letter {
-        font-weight: bold;
-        color: $primary;
-      }
-    }
+    padding: 4px 12px;
+    border-radius: 10px;
+    font-weight: 800;
   }
 }
 
-// RTL Fixes for AI Comment
-.rtl-mode {
-  .cv-card {
-    border-left: 1px solid #edf2f7;
-    border-right: 5px solid #e2e8f0;
-    &.is-winner {
-      border-right-color: $primary;
+// ATS Diagnostic
+.ats-report {
+  margin-top: 40px;
+  border-top: 2px solid $border;
+  padding-top: 30px;
+  .report-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    justify-content: center;
+  }
+  .gauge-box {
+    width: 100px;
+    height: 100px;
+    .gauge {
+      .bg {
+        fill: none;
+        stroke: #eee;
+        stroke-width: 3;
+      }
+      .fill {
+        fill: none;
+        stroke: $primary;
+        stroke-width: 3;
+        stroke-linecap: round;
+        transition: 1s;
+      }
+      .perc {
+        font-weight: 800;
+        font-size: 0.5rem;
+        text-anchor: middle;
+      }
     }
   }
-  .ai-comment {
-    text-align: right;
-    .comment-text {
-      padding-right: 5px;
-      padding-left: 0;
+  .feedback-grid {
+    display: grid;
+    gap: 15px;
+    .tip-card {
+      background: #f8fafc;
+      padding: 15px;
+      border-radius: 12px;
+      display: flex;
+      gap: 10px;
+      border: 1px solid $border;
     }
   }
 }
@@ -291,82 +294,42 @@ $bg-color: #f8fafc;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(6px);
-  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-
+  z-index: 2000;
   .spinner-box {
     text-align: center;
     .spinner {
       width: 50px;
       height: 50px;
-      border: 5px solid #f1f5f9;
+      border: 5px solid #eee;
       border-top-color: $primary;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 20px;
-    }
-    p {
-      font-weight: 700;
-      color: $primary;
-      font-size: 1.1rem;
+      animation: spin 1s infinite linear;
+      margin: 0 auto 15px;
     }
   }
 }
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-.app-footer {
-  margin-top: 60px;
-  padding: 40px 0;
-  border-top: 1px solid $border-color;
-  .footer-content {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    color: $text-light;
-  }
-  .platx-link {
-    text-decoration: none;
-    color: $text-dark;
-    font-weight: 800;
-    span {
-      color: $primary;
+.rtl-mode {
+  .cv-card {
+    border-left: 1px solid $border;
+    border-right: 5px solid #cbd5e1;
+    &.is-winner {
+      border-right-color: $success;
+    }
+    .rank-tag {
+      left: auto;
+      right: -10px;
     }
   }
-}
-
-
-.see-more-btn {
-  background: none;
-  border: none;
-  margin-top: 6px;
-  padding: 0;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  color: #587b69;
-  transition: opacity 0.2s ease;
-
-  &:hover {
-    opacity: 0.7;
-  }
-}
-
-.comment-item {
-  margin-bottom: 6px;
-  line-height: 1.6;
-}
-.rtl-mode .see-more-btn {
-  text-align: right;
 }

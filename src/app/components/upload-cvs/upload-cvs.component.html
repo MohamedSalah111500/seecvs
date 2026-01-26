@@ -1,161 +1,79 @@
 <div class="page-wrapper" [class.rtl-mode]="currentLang === 'ar'">
   <nav class="navbar">
     <div class="nav-content">
-      <div class="logo">
-       <img src="../../../assets/logo-color.png" height="30" alt="seecvs">
-
-      </div>
-      <button class="lang-btn" (click)="toggleLang()">
-        {{ currentLang === "en" ? "العربية" : "English" }}
-      </button>
+      <div class="logo"><img src="../../../assets/logo-color.png" height="30" alt="seecvs"></div>
+      <button class="lang-btn" (click)="toggleLang()">{{ currentLang === 'en' ? 'العربية' : 'English' }}</button>
     </div>
   </nav>
 
   <header class="hero-header">
-    <h1>
-      {{ currentLang === "en" ? "Find the Perfect" : "ابحث عن المرشح" }}
-      <span class="gradient-text">{{
-        currentLang === "en" ? "Candidate" : "المثالي"
-      }}</span>
+    <h1 class="fade-in">
+      {{ currentLang === 'en' ? 'Find the Best CV —' : 'اعثر على السيرة الذاتية الأفضل —' }}
+      <span class="gradient-text">{{ currentLang === 'en' ? 'Instantly' : 'فوراً' }}</span>
     </h1>
+    <p class="subtitle">{{ currentLang === 'en' ? 'ATS-ready CV analysis & smart candidate ranking in seconds' : 'تحليل الـ ATS وترتيب المرشحين بذكاء خلال ثوانٍ' }}</p>
 
-    <div class="tab-switcher">
-      <button
-        [class.active]="activeTab === 'rank'"
-        (click)="activeTab = 'rank'"
-      >
-        {{ currentLang === "en" ? "Ranking Engine" : "محرك الترتيب" }}
-      </button>
-      <button [class.active]="activeTab === 'ats'" (click)="activeTab = 'ats'">
-        {{ currentLang === "en" ? "ATS Checker" : "فاحص الـ ATS" }}
-      </button>
+    <div class="task-selector">
+
+      <div class="task-card" [class.active]="activeTab === 'ats'" (click)="activeTab = 'ats'">
+        <div class="icon">
+          <img src="assets/cv-icon.png" height="40" alt="">
+        </div>
+        <h3>{{ currentLang === 'en' ? 'Check My CV (ATS)' : 'افحص سيرتي الذاتية ATS' }}</h3>
+      </div>
+       <div class="task-card" [class.active]="activeTab === 'rank'" (click)="activeTab = 'rank'">
+        <!-- <div class="icon">🏆</div> -->
+          <img src="assets/rank-icon.png" height="40" alt="">
+        <h3>{{ currentLang === 'en' ? 'Rank Candidates' : 'ترتيب المرشحين' }}</h3>
+      </div>
     </div>
   </header>
 
-  <main class="main-card fade-in">
+  <main class="main-card">
     <div class="dashboard-grid" *ngIf="activeTab === 'rank'">
       <div class="input-pane">
-        <div class="field-group">
-          <label>{{
-            currentLang === "en" ? "Job Requirements" : "متطلبات الوظيفة"
-          }}</label>
-          <textarea
-            [(ngModel)]="jobDescription"
-            [placeholder]="
-              currentLang === 'en' ? 'Paste here...' : 'ضع المتطلبات هنا...'
-            "
-          ></textarea>
-        </div>
+        <div class="step-label">1: {{ currentLang === "en" ? " Job Description" : "م وصف الوظيفة" }}</div>
+        <textarea [(ngModel)]="jobDescription"
+          [placeholder]="currentLang === 'en' ? 'Example: Real Estate Sales with 4 years experiences...' : 'مثال: مسؤول مبيعات عقارات بخبرة 4 سنوات...' ">
+        </textarea>
 
+        <div class="step-label">2: {{ currentLang === "en" ? "Upload CVs" : " تحميل الملفات" }} </div>
         <div class="dropzone" (click)="fRef.click()">
           <div class="dz-icon">📁</div>
           <p>
             {{ currentLang === "en" ? "Drop CVs or" : "اسحب الملفات أو" }}
-            <span class="browse">{{
-              currentLang === "en" ? "Browse" : "تصفح"
-            }}</span>
+            <span class="browse">{{ currentLang === "en" ? "Browse" : "تصفح" }}</span>
           </p>
-          <input
-            #fRef
-            type="file"
-            multiple
-            (change)="onFilesSelected($event)"
-            hidden
-          />
+          <input #fRef type="file" multiple (change)="onFilesSelected($event)" hidden />
         </div>
 
-        <button
-          class="primary-btn"
-          [disabled]="!jobDescription || !cvs.length || isUploading"
-          (click)="uploadAll()"
-        >
-          {{
-            isUploading
-              ? currentLang === "en"
-                ? "Processing..."
-                : "جاري المعالجة..."
-              : currentLang === "en"
-                ? "Analyze Now"
-                : "حلل الآن"
-          }}
+        <button class="primary-btn glow" [disabled]="!jobDescription || !cvs.length || isUploading" (click)="uploadAll()">
+          🚀 {{ isUploading ? (currentLang === 'en' ? 'Analyzing...' : 'جاري التحليل...') : (currentLang === 'en' ? 'Analyze & Rank' : 'حلل ورتب الآن') }}
         </button>
       </div>
 
       <div class="results-pane">
-        <h3 class="pane-title">
-          {{ currentLang === "en" ? "Analysis Queue" : "قائمة التحليل" }}
-        </h3>
+        <div class="pane-title">
+          <h3>🏆 {{ currentLang === 'en' ? 'Leaderboard' : 'لوحة الصدارة' }}</h3>
+          <span class="count-badge" *ngIf="cvs.length">{{ cvs.length }} CVs</span>
+        </div>
+
+        <div class="empty-state" *ngIf="cvs.length === 0">
+          <p>{{ currentLang === 'en' ? 'Upload CVs to see rankings' : 'ارفع السير الذاتية لرؤية النتائج' }}</p>
+        </div>
+
         <div class="cv-stack" [@listAnimation]="cvs.length">
-          <div
-            class="cv-card"
-            *ngFor="let cv of cvs; trackBy: trackByFn"
-            [class.is-winner]="(cv.score || 0) > 70"
-            [class.is-error]="cv.status === 'error'"
-          >
+          <div class="cv-card" *ngFor="let cv of cvs; let i = index" [class.is-winner]="i === 0 && cv.score > 70">
+            <div class="rank-tag" *ngIf="cv.status === 'done'">#{{ i + 1 }}</div>
             <div class="cv-info">
-              <div>
-                <span class="filename">{{ cv.file.name }}</span>
-                <div class="status-tag" [attr.data-status]="cv.status">
-                  {{
-                    cv.status === "done"
-                      ? currentLang === "en"
-                        ? "Analyzed"
-                        : "تم التحليل"
-                      : currentLang === "en"
-                        ? "Pending"
-                        : "قيد الانتظار"
-                  }}
-                </div>
-              </div>
-              <div class="score-pill" *ngIf="cv.status === 'done'">
+              <span class="filename">{{ cv.file.name }}</span>
+              <div class="score-pill" *ngIf="cv.status === 'done'"
+                   [style.background]="cv.score > 75 ? '#10b981' : cv.score > 50 ? '#f59e0b' : '#ef4444'">
                 {{ cv.score }}%
               </div>
             </div>
-
-            <div class="ai-comment" *ngIf="cv.status === 'done' && cv.comment">
-              <div class="ai-badge">
-                ✨
-                {{
-                  currentLang === "en"
-                    ? "AI Analysis"
-                    : "تحليل الذكاء الاصطناعي"
-                }}
-              </div>
-
-              <div class="comment-list">
-                <ng-container *ngIf="isArray(cv.comment); else singleText">
-                  <div
-                    class="comment-item"
-                    *ngFor="let point of visibleComments(cv)"
-                  >
-                    {{ point }}
-                  </div>
-
-                  <button
-                    *ngIf="hasMore(cv)"
-                    class="see-more-btn"
-                    (click)="toggleExpand(cv)"
-                  >
-                    {{
-                      cv.isExpanded
-                        ? currentLang === "en"
-                          ? "See less"
-                          : "عرض أقل"
-                        : currentLang === "en"
-                          ? "See more"
-                          : "عرض المزيد"
-                    }}
-                  </button>
-                </ng-container>
-
-                <ng-template #singleText>
-                  <div class="comment-text">{{ cv.comment }}</div>
-                </ng-template>
-              </div>
-            </div>
-
-            <div class="ai-comment is-error" *ngIf="cv.status === 'error'">
-              {{ currentLang === "en" ? "Analysis failed." : "فشل التحليل." }}
+            <div class="ai-comment" *ngIf="cv.status === 'done'">
+               <div class="comment-item" *ngFor="let p of cv.comment.slice(0,3)">{{ p }}</div>
             </div>
           </div>
         </div>
@@ -163,55 +81,42 @@
     </div>
 
     <div class="ats-view" *ngIf="activeTab === 'ats'">
-      <div class="ats-center">
-        <h2>
-          {{
-            currentLang === "en"
-              ? "ATS Resume Optimization"
-              : "تحسين السيرة الذاتية للـ ATS"
-          }}
-        </h2>
+      <div class="ats-container">
+        <div class="step-label">1:  {{ currentLang === 'en' ? 'Upload your CV' : 'اسحب سيرتك الذاتية' }}</div>
+
         <div class="dropzone" (click)="atsRef.click()">
+          <div class="dz-icon">{{ atsFile ? '📄' : '☁️' }}</div>
           <p>
-            {{
-              atsFile
-                ? atsFile.name
-                : currentLang === "en"
-                  ? "Select your CV"
-                  : "اختر ملفك"
-            }}
+            {{ atsFile ? atsFile.name : (currentLang === 'en' ? 'Drop your CV or' : 'اسحب سيرتك الذاتية أو') }}
+            <span class="browse" *ngIf="!atsFile">{{ currentLang === 'en' ? 'Browse' : 'تصفح' }}</span>
           </p>
-          <input
-            #atsRef
-            type="file"
-            (change)="onAtsFileSelected($event)"
-            hidden
-          />
+          <input #atsRef type="file" (change)="onAtsFileSelected($event)" hidden />
         </div>
-        <button
-          class="primary-btn"
-          (click)="checkAts()"
-          [disabled]="!atsFile || isUploading"
-        >
-          {{
-            isUploading
-              ? currentLang === "en"
-                ? "Checking..."
-                : "جاري الفحص..."
-              : currentLang === "en"
-                ? "Check ATS Score"
-                : "افحص النتيجة"
-          }}
+
+        <button class="primary-btn glow" (click)="checkAts()" [disabled]="!atsFile || isUploading">
+          🎯 {{ currentLang === 'en' ? 'Check ATS Score' : 'افحص نتيجة الـ ATS' }}
         </button>
 
-        <div class="ats-results" *ngIf="atsResult">
-          <div class="score-circle">
-            <span>{{ atsResult.score }}%</span>
+        <div class="ats-report fade-in" *ngIf="atsResult">
+          <div class="report-header">
+            <div class="gauge-box">
+              <svg viewBox="0 0 36 36" class="gauge">
+                <path class="bg" d="M18 2 a 16 16 0 0 1 0 32 a 16 16 0 0 1 0 -32"/>
+                <path class="fill" [style.stroke-dasharray]="atsResult.score + ', 100'" d="M18 2 a 16 16 0 0 1 0 32 a 16 16 0 0 1 0 -32"/>
+                <text x="18" y="20.5" class="perc">{{ atsResult.score }}%</text>
+              </svg>
+            </div>
+            <div class="verdict-box">
+              <span class="badge" [style.background]="atsResult.score > 75 ? '#10b981' : '#f59e0b'">
+                {{ getScoreLabel(atsResult.score) }}
+              </span>
+              <h3>{{ currentLang === 'en' ? 'ATS Compatibility' : 'توافق نظام الـ ATS' }}</h3>
+            </div>
           </div>
 
-          <div class="comment-list">
-            <div class="comment-item" *ngFor="let point of atsResult.comment">
-              • {{ point }}
+          <div class="feedback-grid">
+            <div class="tip-card" *ngFor="let tip of atsResult.comment">
+              <span class="icon">💡</span> <p>{{ tip }}</p>
             </div>
           </div>
         </div>
@@ -221,14 +126,6 @@
 </div>
 
 <div class="global-overlay" *ngIf="isUploading">
-  <div class="spinner-box">
-    <div class="spinner"></div>
-    <p>
-      {{
-        currentLang === "en"
-          ? " Under processing..."
-          : "جاري  يعالجة البيانات..."
-      }}
-    </p>
-  </div>
+  <div class="spinner-box"><div class="spinner"></div>
+  <p>{{ currentLang === 'en' ? 'Analyzing...' : 'جاري التحليل...' }}</p></div>
 </div>
