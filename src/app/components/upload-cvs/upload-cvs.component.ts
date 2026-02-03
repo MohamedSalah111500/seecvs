@@ -9,6 +9,8 @@ export interface UploadedCv {
   status: 'pending' | 'uploading' | 'done' | 'error'
   score: number
   comment: string[]
+  improvements: string[]
+  warnings: string[]
   isExpanded?: boolean
 }
 
@@ -77,7 +79,8 @@ export class UploadCvsComponent {
         .subscribe({
           next: (res: any) => {
             const data = res.results[0]
-            cv.comment = data.comment; cv.score = data.score; cv.status = 'done'
+            cv.comment = data.comment || []; cv.score = data.score; cv.status = 'done'
+            cv.improvements = data.improvements || []; cv.warnings = data.warnings || []
             this.checkFinished()
           },
           error: () => { cv.status = 'error'; this.checkFinished() }
@@ -114,7 +117,7 @@ export class UploadCvsComponent {
     const input = event.target as HTMLInputElement
     if (!input.files) return
     const mapped: UploadedCv[] = Array.from(input.files).map((file) => ({
-      file, status: 'pending', score: 0, comment: []
+      file, status: 'pending' as const, score: 0, comment: [], improvements: [], warnings: []
     }))
     this.cvs = [...this.cvs, ...mapped]; input.value = ''
   }

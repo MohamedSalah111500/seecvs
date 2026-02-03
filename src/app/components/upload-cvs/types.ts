@@ -3,5 +3,7 @@ export interface UploadedCv {
   progress: number;
   status: 'pending' | 'uploading' | 'done' | 'error';
   score?: number;
-  comment?: string;
+  comment?: string[];
+  improvements?: string[];
+  warnings?: string[];
 }

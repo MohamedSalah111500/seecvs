@@ -72,8 +72,15 @@
                 {{ cv.score }}%
               </div>
             </div>
-            <div class="ai-comment" *ngIf="cv.status === 'done'">
-               <div class="comment-item" *ngFor="let p of cv.comment.slice(0,3)">{{ p }}</div>
+            <div class="cv-summary" *ngIf="cv.status === 'done' && cv.comment?.length">
+              <p class="summary-text">
+                {{ cv.isExpanded ? cv.comment.join(' ') : cv.comment[0] }}
+              </p>
+              <button class="see-more-btn" *ngIf="cv.comment.length > 1" (click)="cv.isExpanded = !cv.isExpanded">
+                {{ cv.isExpanded
+                  ? (currentLang === 'en' ? 'See less' : 'عرض أقل')
+                  : (currentLang === 'en' ? 'See more' : 'عرض المزيد') }}
+              </button>
             </div>
           </div>
         </div>
@@ -114,9 +121,29 @@
             </div>
           </div>
 
-          <div class="feedback-grid">
-            <div class="tip-card" *ngFor="let tip of atsResult.comment">
-              <span class="icon">💡</span> <p>{{ tip }}</p>
+          <div class="ats-feedback-sections">
+            <div class="ats-feedback-block do-block" *ngIf="atsResult.improvements?.length">
+              <div class="block-header do-header">
+                <span class="block-icon">&#x2705;</span>
+                <h4>{{ currentLang === 'en' ? 'What you should do' : 'ما يجب عليك فعله' }}</h4>
+              </div>
+              <div class="feedback-grid">
+                <div class="tip-card do-tip" *ngFor="let tip of atsResult.improvements">
+                  <p>{{ tip }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="ats-feedback-block dont-block" *ngIf="atsResult.warnings?.length">
+              <div class="block-header dont-header">
+                <span class="block-icon">&#x26A0;&#xFE0F;</span>
+                <h4>{{ currentLang === 'en' ? 'What to remove or avoid' : 'ما يجب إزالته أو تجنبه' }}</h4>
+              </div>
+              <div class="feedback-grid">
+                <div class="tip-card dont-tip" *ngFor="let tip of atsResult.warnings">
+                  <p>{{ tip }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
