@@ -1,9 +1,23 @@
-<div class="app-container">
+<div class="app-container" [class.rtl-mode]="lang.currentLang === 'ar'">
+  <nav class="navbar">
+    <div class="nav-content">
+      <a routerLink="/" class="logo"><img src="assets/logo-color.png" height="30" alt="seecvs"></a>
+      <button class="lang-btn" (click)="lang.toggleLang()">{{ lang.currentLang === 'en' ? 'العربية' : 'English' }}</button>
+    </div>
+  </nav>
+
   <main class="content-wrapper">
-    <app-upload-cvs></app-upload-cvs>
+    <router-outlet></router-outlet>
     <footer class="app-footer">
       <div class="footer-content">
-        <p>© 2026 seecvs.com. All rights reserved.</p>
+        <div class="footer-left">
+          <p>© 2026 seecvs.com. {{ lang.currentLang === 'en' ? 'All rights reserved.' : 'جميع الحقوق محفوظة.' }}</p>
+          <div class="footer-links">
+            <a routerLink="/terms">{{ lang.currentLang === 'en' ? 'Terms & Conditions' : 'الشروط والأحكام' }}</a>
+            <span class="divider">|</span>
+            <a routerLink="/privacy">{{ lang.currentLang === 'en' ? 'Privacy Policy' : 'سياسة الخصوصية' }}</a>
+          </div>
+        </div>
         <div class="brand">
           <span>Powered by</span>
           <a href="https://platx.net" target="_blank" class="platx-link">

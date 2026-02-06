@@ -1,0 +1,107 @@
+<div class="legal-page" [class.rtl-mode]="currentLang === 'ar'">
+  <div class="legal-container">
+    <a routerLink="/" class="back-link">
+      {{ currentLang === 'en' ? '← Back to Home' : '→ العودة للرئيسية' }}
+    </a>
+
+    <h1>{{ currentLang === 'en' ? 'Terms & Conditions' : 'الشروط والأحكام' }}</h1>
+    <p class="last-updated">{{ currentLang === 'en' ? 'Last updated: February 2026' : 'آخر تحديث: فبراير 2026' }}</p>
+
+    <!-- Section 1 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '1. About SeeCVs' : '1. حول SeeCVs' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        SeeCVs is an online tool that helps you check your CV for ATS (Applicant Tracking System) compatibility and rank candidates based on job descriptions. By using our service, you agree to these terms.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        SeeCVs هي أداة إلكترونية تساعدك في فحص سيرتك الذاتية للتوافق مع أنظمة تتبع المتقدمين (ATS) وترتيب المرشحين بناءً على وصف الوظيفة. باستخدامك لخدمتنا، فإنك توافق على هذه الشروط.
+      </p>
+    </section>
+
+    <!-- Section 2 - CV Storage Notice -->
+    <section class="highlight-section">
+      <h2>{{ currentLang === 'en' ? '2. CV Upload & Storage' : '2. رفع وتخزين السيرة الذاتية' }}</h2>
+      <div class="notice-box">
+        <svg class="notice-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#587b69" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <div>
+          <p *ngIf="currentLang === 'en'">
+            <strong>Important:</strong> When you upload your CV to SeeCVs, it will be saved in our system. We store your CV to process and analyze it. By uploading, you give us permission to save and process your CV data.
+          </p>
+          <p *ngIf="currentLang === 'ar'">
+            <strong>مهم:</strong> عند رفع سيرتك الذاتية على SeeCVs، سيتم حفظها في نظامنا. نقوم بتخزين سيرتك الذاتية لمعالجتها وتحليلها. بالرفع، فإنك تمنحنا الإذن بحفظ ومعالجة بيانات سيرتك الذاتية.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '3. How We Use Your Data' : '3. كيف نستخدم بياناتك' }}</h2>
+      <ul>
+        <li *ngIf="currentLang === 'en'">To analyze your CV for ATS compatibility</li>
+        <li *ngIf="currentLang === 'ar'">لتحليل سيرتك الذاتية للتوافق مع أنظمة ATS</li>
+        <li *ngIf="currentLang === 'en'">To rank candidates against job descriptions</li>
+        <li *ngIf="currentLang === 'ar'">لترتيب المرشحين مقابل وصف الوظيفة</li>
+        <li *ngIf="currentLang === 'en'">To improve our analysis and service quality</li>
+        <li *ngIf="currentLang === 'ar'">لتحسين جودة التحليل والخدمة</li>
+      </ul>
+    </section>
+
+    <!-- Section 4 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '4. Your Responsibilities' : '4. مسؤولياتك' }}</h2>
+      <ul>
+        <li *ngIf="currentLang === 'en'">You must only upload CVs that you have the right to share</li>
+        <li *ngIf="currentLang === 'ar'">يجب عليك رفع السير الذاتية التي لديك الحق في مشاركتها فقط</li>
+        <li *ngIf="currentLang === 'en'">You are responsible for the accuracy of the information you upload</li>
+        <li *ngIf="currentLang === 'ar'">أنت مسؤول عن دقة المعلومات التي ترفعها</li>
+        <li *ngIf="currentLang === 'en'">You must not use this service for any unlawful purpose</li>
+        <li *ngIf="currentLang === 'ar'">يجب عليك عدم استخدام هذه الخدمة لأي غرض غير قانوني</li>
+      </ul>
+    </section>
+
+    <!-- Section 5 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '5. Service Limitations' : '5. حدود الخدمة' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        SeeCVs provides AI-powered analysis as guidance only. Results are not guaranteed to be 100% accurate. We are not responsible for hiring decisions made based on our analysis. Use the results as one of many tools in your decision-making process.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        يقدم SeeCVs تحليلاً مدعوماً بالذكاء الاصطناعي كإرشاد فقط. النتائج غير مضمونة بدقة 100%. نحن غير مسؤولين عن قرارات التوظيف المبنية على تحليلنا. استخدم النتائج كأداة من بين أدوات عديدة في عملية اتخاذ القرار.
+      </p>
+    </section>
+
+    <!-- Section 6 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '6. Intellectual Property' : '6. الملكية الفكرية' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        You retain ownership of your CV content. By uploading, you grant SeeCVs a limited license to process and analyze your documents for the purpose of providing our service.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        تحتفظ بملكية محتوى سيرتك الذاتية. بالرفع، تمنح SeeCVs ترخيصاً محدوداً لمعالجة وتحليل مستنداتك لغرض تقديم خدمتنا.
+      </p>
+    </section>
+
+    <!-- Section 7 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '7. Changes to These Terms' : '7. التغييرات على هذه الشروط' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        We may update these terms from time to time. Continued use of SeeCVs after changes means you accept the updated terms.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        قد نقوم بتحديث هذه الشروط من وقت لآخر. استمرارك في استخدام SeeCVs بعد التغييرات يعني قبولك للشروط المحدثة.
+      </p>
+    </section>
+
+    <!-- Section 8 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '8. Contact Us' : '8. تواصل معنا' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        If you have any questions about these terms, please visit <a href="https://platx.net" target="_blank" rel="noopener">platx.net</a>.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        إذا كان لديك أي أسئلة حول هذه الشروط، يرجى زيارة <a href="https://platx.net" target="_blank" rel="noopener">platx.net</a>.
+      </p>
+    </section>
+  </div>
+</div>

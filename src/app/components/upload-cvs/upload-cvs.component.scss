@@ -15,30 +15,9 @@ $border: #e2e8f0;
 }
 
 .page-wrapper {
-  padding-top: 80px;
   min-height: 100vh;
   &.rtl-mode {
     direction: rtl;
-  }
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 70px;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  border-bottom: 1px solid $border;
-  .nav-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    padding: 0 20px;
   }
 }
 
@@ -458,6 +437,66 @@ textarea {
   }
 }
 
+// Consent Section
+.consent-section {
+  margin: 16px 0;
+  padding: 16px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 14px;
+}
+
+.consent-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.6;
+
+  .consent-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.consent-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    accent-color: $primary;
+    cursor: pointer;
+    margin-top: 2px;
+  }
+
+  .consent-text {
+    font-size: 0.88rem;
+    color: #334155;
+    line-height: 1.6;
+
+    a {
+      color: $primary;
+      font-weight: 700;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 .rtl-mode {
   .cv-card {
     border-left: 1px solid $border;
@@ -469,5 +508,40 @@ textarea {
       left: auto;
       right: -10px;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .task-selector {
+    flex-direction: column;
+    align-items: center;
+
+    .task-card {
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .hero-header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .consent-section {
+    padding: 12px;
+  }
+
+  .hero-header h1 {
+    font-size: 1.6rem;
   }
 }

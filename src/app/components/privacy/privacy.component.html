@@ -1,0 +1,126 @@
+<div class="legal-page" [class.rtl-mode]="currentLang === 'ar'">
+  <div class="legal-container">
+    <a routerLink="/" class="back-link">
+      {{ currentLang === 'en' ? '← Back to Home' : '→ العودة للرئيسية' }}
+    </a>
+
+    <h1>{{ currentLang === 'en' ? 'Privacy Policy' : 'سياسة الخصوصية' }}</h1>
+    <p class="last-updated">{{ currentLang === 'en' ? 'Last updated: February 2026' : 'آخر تحديث: فبراير 2026' }}</p>
+
+    <!-- Section 1 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '1. What Data We Collect' : '1. ما البيانات التي نجمعها' }}</h2>
+      <p *ngIf="currentLang === 'en'">When you use SeeCVs, we collect the following information:</p>
+      <p *ngIf="currentLang === 'ar'">عند استخدامك لـ SeeCVs، نجمع المعلومات التالية:</p>
+      <ul>
+        <li *ngIf="currentLang === 'en'">CV files you upload</li>
+        <li *ngIf="currentLang === 'ar'">ملفات السيرة الذاتية التي ترفعها</li>
+        <li *ngIf="currentLang === 'en'">Job descriptions you enter</li>
+        <li *ngIf="currentLang === 'ar'">أوصاف الوظائف التي تدخلها</li>
+        <li *ngIf="currentLang === 'en'">Your language preference</li>
+        <li *ngIf="currentLang === 'ar'">تفضيلات اللغة الخاصة بك</li>
+      </ul>
+    </section>
+
+    <!-- Section 2 - CV Storage -->
+    <section class="highlight-section">
+      <h2>{{ currentLang === 'en' ? '2. CV Storage & Retention' : '2. تخزين السيرة الذاتية والاحتفاظ بها' }}</h2>
+      <div class="notice-box">
+        <svg class="notice-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#587b69" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <div>
+          <p *ngIf="currentLang === 'en'">
+            <strong>Your CVs are saved in our system.</strong> When you upload a CV, it is stored on our servers for processing and analysis. We keep your data to provide and improve our service.
+          </p>
+          <p *ngIf="currentLang === 'ar'">
+            <strong>يتم حفظ سيرتك الذاتية في نظامنا.</strong> عند رفع سيرة ذاتية، يتم تخزينها على خوادمنا للمعالجة والتحليل. نحتفظ ببياناتك لتقديم خدمتنا وتحسينها.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '3. How We Use Your Data' : '3. كيف نستخدم بياناتك' }}</h2>
+      <ul>
+        <li *ngIf="currentLang === 'en'">To analyze CVs for ATS compatibility scores</li>
+        <li *ngIf="currentLang === 'ar'">لتحليل السير الذاتية لنتائج توافق ATS</li>
+        <li *ngIf="currentLang === 'en'">To rank candidates against job descriptions</li>
+        <li *ngIf="currentLang === 'ar'">لترتيب المرشحين مقابل وصف الوظيفة</li>
+        <li *ngIf="currentLang === 'en'">To provide feedback and improvement suggestions</li>
+        <li *ngIf="currentLang === 'ar'">لتقديم الملاحظات واقتراحات التحسين</li>
+        <li *ngIf="currentLang === 'en'">To improve the quality of our analysis tools</li>
+        <li *ngIf="currentLang === 'ar'">لتحسين جودة أدوات التحليل لدينا</li>
+      </ul>
+    </section>
+
+    <!-- Section 4 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '4. Data Sharing' : '4. مشاركة البيانات' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        We do not sell your personal data. Your CV data may be processed by our AI analysis backend to generate results. We do not share your CV content with other users or third parties for marketing purposes.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        نحن لا نبيع بياناتك الشخصية. قد تتم معالجة بيانات سيرتك الذاتية بواسطة نظام التحليل بالذكاء الاصطناعي لتوليد النتائج. نحن لا نشارك محتوى سيرتك الذاتية مع مستخدمين آخرين أو أطراف ثالثة لأغراض تسويقية.
+      </p>
+    </section>
+
+    <!-- Section 5 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '5. Your Rights' : '5. حقوقك' }}</h2>
+      <p *ngIf="currentLang === 'en'">You have the right to:</p>
+      <p *ngIf="currentLang === 'ar'">لديك الحق في:</p>
+      <ul>
+        <li *ngIf="currentLang === 'en'">Know what data we hold about you</li>
+        <li *ngIf="currentLang === 'ar'">معرفة البيانات التي نحتفظ بها عنك</li>
+        <li *ngIf="currentLang === 'en'">Request deletion of your data</li>
+        <li *ngIf="currentLang === 'ar'">طلب حذف بياناتك</li>
+        <li *ngIf="currentLang === 'en'">Withdraw your consent at any time</li>
+        <li *ngIf="currentLang === 'ar'">سحب موافقتك في أي وقت</li>
+      </ul>
+    </section>
+
+    <!-- Section 6 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '6. Security' : '6. الأمان' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        We take reasonable measures to protect your data. Your CV files are transmitted securely over HTTPS. However, no system is 100% secure, and we cannot guarantee absolute protection of your data.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        نتخذ تدابير معقولة لحماية بياناتك. يتم نقل ملفات سيرتك الذاتية بشكل آمن عبر HTTPS. ومع ذلك، لا يوجد نظام آمن بنسبة 100%، ولا يمكننا ضمان الحماية المطلقة لبياناتك.
+      </p>
+    </section>
+
+    <!-- Section 7 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '7. Cookies & Local Storage' : '7. ملفات تعريف الارتباط والتخزين المحلي' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        We use your browser's local storage to save your language preference. We do not use tracking cookies or third-party analytics.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        نستخدم التخزين المحلي في متصفحك لحفظ تفضيلات اللغة. نحن لا نستخدم ملفات تعريف ارتباط للتتبع أو تحليلات الأطراف الثالثة.
+      </p>
+    </section>
+
+    <!-- Section 8 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '8. Changes to This Policy' : '8. التغييرات على هذه السياسة' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        We may update this privacy policy from time to time. Continued use of SeeCVs after changes means you accept the updated policy.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. استمرارك في استخدام SeeCVs بعد التغييرات يعني قبولك للسياسة المحدثة.
+      </p>
+    </section>
+
+    <!-- Section 9 -->
+    <section>
+      <h2>{{ currentLang === 'en' ? '9. Contact Us' : '9. تواصل معنا' }}</h2>
+      <p *ngIf="currentLang === 'en'">
+        If you have questions about this privacy policy or want to request data deletion, please visit <a href="https://platx.net" target="_blank" rel="noopener">platx.net</a>.
+      </p>
+      <p *ngIf="currentLang === 'ar'">
+        إذا كان لديك أسئلة حول سياسة الخصوصية هذه أو تريد طلب حذف بياناتك، يرجى زيارة <a href="https://platx.net" target="_blank" rel="noopener">platx.net</a>.
+      </p>
+    </section>
+  </div>
+</div>

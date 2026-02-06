@@ -1,19 +1,15 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-import { UploadCvsComponent } from './components/upload-cvs/upload-cvs.component';
+import { RouterOutlet, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { LanguageService } from './services/language.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-imports: [RouterOutlet, FormsModule, HttpClientModule, UploadCvsComponent],
+  imports: [RouterOutlet, RouterLink, CommonModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],  // fixed here
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
-  constructor() {}
-
-
+  constructor(public lang: LanguageService) {}
 }

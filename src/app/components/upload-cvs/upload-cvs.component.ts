@@ -1,8 +1,10 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
+import { RouterLink } from '@angular/router'
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations'
 import { CvAnalyzerService } from './cv-analyzer.service'
+import { LanguageService } from '../../services/language.service'
 
 export interface UploadedCv {
   file: File
@@ -17,7 +19,7 @@ export interface UploadedCv {
 @Component({
   selector: 'app-upload-cvs',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './upload-cvs.component.html',
   styleUrls: ['./upload-cvs.component.scss'],
   animations: [
@@ -35,31 +37,16 @@ export class UploadCvsComponent {
   cvs: UploadedCv[] = []
   jobDescription = ''
   isUploading = false
+  consentGiven = false
   currentLang: 'en' | 'ar' = 'en'
-  activeTab: 'rank' | 'ats' = 'ats' // Task-based entry
+  activeTab: 'rank' | 'ats' = 'ats'
   atsFile: File | null = null
   atsResult: any = null
 
-  readonly LANG_KEY = 'user_language'
-
-  constructor(private analyzerService: CvAnalyzerService) {
-    const savedLang = localStorage.getItem(this.LANG_KEY) as 'en' | 'ar'
-    if (savedLang) {
-      this.currentLang = savedLang
-      this.applyLanguageSettings(savedLang)
-    }
-  }
-
-  toggleLang() {
-    this.currentLang = this.currentLang === 'en' ? 'ar' : 'en'
-    localStorage.setItem(this.LANG_KEY, this.currentLang)
-    this.applyLanguageSettings(this.currentLang)
-  }
-
-  applyLanguageSettings(lang: 'en' | 'ar') {
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'
-    document.documentElement.lang = lang
-    document.body.classList.toggle('rtl-mode', lang === 'ar')
+  constructor(private analyzerService: CvAnalyzerService, private langService: LanguageService) {
+    this.langService.currentLang$.subscribe(lang => {
+      this.currentLang = lang
+    })
   }
 
   // Task Selection

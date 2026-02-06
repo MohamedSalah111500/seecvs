@@ -1,11 +1,4 @@
 <div class="page-wrapper" [class.rtl-mode]="currentLang === 'ar'">
-  <nav class="navbar">
-    <div class="nav-content">
-      <div class="logo"><img src="../../../assets/logo-color.png" height="30" alt="seecvs"></div>
-      <button class="lang-btn" (click)="toggleLang()">{{ currentLang === 'en' ? 'العربية' : 'English' }}</button>
-    </div>
-  </nav>
-
   <header class="hero-header">
     <h1 class="fade-in">
       {{ currentLang === 'en' ? 'Find the Best CV —' : 'اعثر على السيرة الذاتية الأفضل —' }}
@@ -47,7 +40,24 @@
           <input #fRef type="file" multiple (change)="onFilesSelected($event)" hidden />
         </div>
 
-        <button class="primary-btn glow" [disabled]="!jobDescription || !cvs.length || isUploading" (click)="uploadAll()">
+        <div class="consent-section">
+          <div class="consent-notice">
+            <svg class="consent-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#587b69" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span>{{ currentLang === 'en' ? 'Your uploaded CVs will be saved in our system for analysis.' : 'سيتم حفظ السير الذاتية المرفوعة في نظامنا للتحليل.' }}</span>
+          </div>
+          <label class="consent-checkbox">
+            <input type="checkbox" [(ngModel)]="consentGiven" />
+            <span class="checkmark"></span>
+            <span class="consent-text">
+              {{ currentLang === 'en' ? 'I agree to the' : 'أوافق على' }}
+              <a routerLink="/terms" target="_blank">{{ currentLang === 'en' ? 'Terms & Conditions' : 'الشروط والأحكام' }}</a>
+              {{ currentLang === 'en' ? 'and' : 'و' }}
+              <a routerLink="/privacy" target="_blank">{{ currentLang === 'en' ? 'Privacy Policy' : 'سياسة الخصوصية' }}</a>
+            </span>
+          </label>
+        </div>
+
+        <button class="primary-btn glow" [disabled]="!jobDescription || !cvs.length || isUploading || !consentGiven" (click)="uploadAll()">
           🚀 {{ isUploading ? (currentLang === 'en' ? 'Analyzing...' : 'جاري التحليل...') : (currentLang === 'en' ? 'Analyze & Rank' : 'حلل ورتب الآن') }}
         </button>
       </div>
@@ -100,7 +110,24 @@
           <input #atsRef type="file" (change)="onAtsFileSelected($event)" hidden />
         </div>
 
-        <button class="primary-btn glow" (click)="checkAts()" [disabled]="!atsFile || isUploading">
+        <div class="consent-section">
+          <div class="consent-notice">
+            <svg class="consent-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#587b69" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span>{{ currentLang === 'en' ? 'Your uploaded CV will be saved in our system for analysis.' : 'سيتم حفظ سيرتك الذاتية المرفوعة في نظامنا للتحليل.' }}</span>
+          </div>
+          <label class="consent-checkbox">
+            <input type="checkbox" [(ngModel)]="consentGiven" />
+            <span class="checkmark"></span>
+            <span class="consent-text">
+              {{ currentLang === 'en' ? 'I agree to the' : 'أوافق على' }}
+              <a routerLink="/terms" target="_blank">{{ currentLang === 'en' ? 'Terms & Conditions' : 'الشروط والأحكام' }}</a>
+              {{ currentLang === 'en' ? 'and' : 'و' }}
+              <a routerLink="/privacy" target="_blank">{{ currentLang === 'en' ? 'Privacy Policy' : 'سياسة الخصوصية' }}</a>
+            </span>
+          </label>
+        </div>
+
+        <button class="primary-btn glow" (click)="checkAts()" [disabled]="!atsFile || isUploading || !consentGiven">
           🎯 {{ currentLang === 'en' ? 'Check ATS Score' : 'افحص نتيجة الـ ATS' }}
         </button>
 
